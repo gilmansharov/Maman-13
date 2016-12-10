@@ -136,6 +136,8 @@ public class IsraelTour
 		int count;
 		int max = 0;
 		String str = "";
+		if (this._data[0] == null)
+			return null;
 		for (int i = 0; i < _noOfTrips; i++)
 		{
 			count = 1;
@@ -153,7 +155,7 @@ public class IsraelTour
 				str = new String(_data[i].getGuideName());
 			}
 		}
-		return new String(str);
+		return  (!str.equals("")) ? new String(str) : null;
 	}
 
 	/**
@@ -177,9 +179,11 @@ public class IsraelTour
 	 */
 	public Trip mostExpensiveTrip()
 	{
+		if (_data[0] == null)
+			return null;
 		int max = 0;
-		Trip t = null;
-		for (int i = 0; i < _noOfTrips; i++)
+		Trip t = new Trip(_data[0]);
+		for (int i = 1; i < _noOfTrips; i++)
 			if (_data[i].calculatePrice() > max)
 			{
 				t = new Trip(_data[i]);
