@@ -133,29 +133,30 @@ public class IsraelTour
 	 */
 	public String mostPopularGuide()
 	{
-		int count;
-		int max = 0;
-		String str = "";
-		if (this._data[0] == null)
-			return null;
-		for (int i = 0; i < _noOfTrips; i++)
+		if (this._data[0] != null)
 		{
-			count = 1;
-			for (int j = 0; j < _noOfTrips; j++)
+			int count;
+			int max = 0;
+			String str = new String("");
+			for (int i = 0; i < _noOfTrips; i++)
 			{
-				if (i == j)
-					continue;
-				if (_data[i].getGuideName().equals(_data[j].getGuideName()))
-					count++;
+				count = 1;
+				for (int j = 0; j < _noOfTrips; j++)
+				{
+					if (i == j)
+						continue;
+					count += (_data[i].getGuideName().equals(_data[j].getGuideName())) ? 1 : 0;
+				}
+				
+				if (count > max)
+				{
+					max = count;
+					str = new String(_data[i].getGuideName());
+				}
 			}
-			
-			if (count > max)
-			{
-				max = count;
-				str = new String(_data[i].getGuideName());
-			}
+			return  (!str.equals("")) ? new String(str) : null;
 		}
-		return  (!str.equals("")) ? new String(str) : null;
+		return null;
 	}
 
 	/**
@@ -179,17 +180,19 @@ public class IsraelTour
 	 */
 	public Trip mostExpensiveTrip()
 	{
-		if (_data[0] == null)
-			return null;
-		int max = 0;
-		Trip t = new Trip(_data[0]);
-		for (int i = 1; i < _noOfTrips; i++)
-			if (_data[i].calculatePrice() > max)
-			{
-				t = new Trip(_data[i]);
-				max = t.calculatePrice();
-			}
-		return new Trip(t);
+		if (_data[0] != null)
+		{
+			int max = 0;
+			Trip t = new Trip(_data[0]);
+			for (int i = 1; i < _noOfTrips; i++)
+				if (_data[i].calculatePrice() > max)
+				{
+					t = new Trip(_data[i]);
+					max = t.calculatePrice();
+				}
+			return new Trip(t);
+		}
+		return null;
 	}
 	
 
