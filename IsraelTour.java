@@ -52,15 +52,16 @@ public class IsraelTour
 	 */
 	public boolean removeTrip(Trip t)
 	{
-		if (t == null)
-			return false;
-		for (int i = 0; i < this._noOfTrips; i++)
-			if (this._data[i].equals(t))
-			{
-				this._data[i] = (i != this._noOfTrips - 1) ? new Trip(_data[_noOfTrips - 1]) : null;
-				this._noOfTrips--;
-				return true;
-			}
+		if (t != null)
+		{
+			for (int i = 0; i < this._noOfTrips; i++)
+				if (this._data[i].equals(t))
+				{
+					this._data[i] = (i != this._noOfTrips - 1) ? new Trip(_data[_noOfTrips - 1]) : null;
+					this._noOfTrips--;
+					return true;
+				}
+		}
 		return false;
 	}
 
