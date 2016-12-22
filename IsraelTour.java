@@ -1,3 +1,8 @@
+/**
+ * @author Gil Mansharov
+ * @ID 313260192
+ */
+
 public class IsraelTour
 {
 	/**
@@ -37,7 +42,7 @@ public class IsraelTour
 	 */
 	public boolean addTrip(Trip t)
 	{
-		if (this._noOfTrips < MAX_TRIPS)
+		if (this._noOfTrips < MAX_TRIPS && t != null)
 		{
 			_data[this._noOfTrips++] = new Trip(t);
 			return true;
@@ -58,6 +63,7 @@ public class IsraelTour
 				if (this._data[i].equals(t))
 				{
 					this._data[i] = (i != this._noOfTrips - 1) ? new Trip(_data[_noOfTrips - 1]) : null;
+					_data[_noOfTrips - 1] = null;
 					this._noOfTrips--;
 					return true;
 				}
@@ -84,10 +90,14 @@ public class IsraelTour
 	 */
 	public int howManyTripsDeparture(Date d)
 	{
-		int count = 0;
-		for (int i = 0; i < this._noOfTrips; i++)
-			count += (_data[i].getDepartureDate().equals(d)) ? 1 : 0;
-		return count;
+		if (d != null)
+		{
+			int count = 0;
+			for (int i = 0; i < this._noOfTrips; i++)
+				count += (_data[i].getDepartureDate().equals(d)) ? 1 : 0;
+			return count;
+		}
+		return 0;
 	}
 
 	/**
@@ -110,7 +120,20 @@ public class IsraelTour
 	 */
 	private Trip maxDuration(Trip a, Trip b)
 	{
-		return a.tripDuration() > b.tripDuration() ? new Trip(a) : new Trip(b);
+		if (a != null && b != null)
+		{
+			return a.tripDuration() > b.tripDuration() ? new Trip(a) : new Trip(b);
+		}
+		else if (a == null)
+		{
+			return (b != null) ? new Trip(b) : null;
+		}
+		else if (b == null)
+		{
+			return (a != null) ? new Trip(a) : null;
+		}
+		return null;
+			
 	}
 	
 	/**
@@ -122,7 +145,7 @@ public class IsraelTour
 		{
 			Trip maxTrip = new Trip(_data[0]);
 			for (int i = 1; i < _noOfTrips && _data[i] != null; i++)
-				maxTrip = new Trip(maxDuration(maxTrip, _data[i]));
+				maxTrip = new Trip(maxDuration(_data[i], maxTrip));
 			return new Trip(maxTrip);
 		}
 		return null;
@@ -155,9 +178,9 @@ public class IsraelTour
 					str = new String(_data[i].getGuideName());
 				}
 			}
-			return  (!str.equals("")) ? new String(str) : null;
+			return  new String(str);
 		}
-		return null;
+		return new String("");
 	}
 
 	/**
@@ -183,8 +206,8 @@ public class IsraelTour
 	{
 		if (_data[0] != null)
 		{
-			int max = 0;
 			Trip t = new Trip(_data[0]);
+			int max = t.calculatePrice();
 			for (int i = 1; i < _noOfTrips; i++)
 				if (_data[i].calculatePrice() > max)
 				{
