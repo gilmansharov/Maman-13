@@ -1,6 +1,5 @@
 /**
  * @author Gil Mansharov
- * @ID 313260192
  */
 
 public class IsraelTour
